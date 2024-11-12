@@ -758,6 +758,24 @@ begin
   end;
 end;
 
+procedure Dependency_AddPython379;
+var
+  Version: String;
+  PackedVersion: Int64;
+  Version2: String;
+  PackedVersion2: Int64;
+begin
+  // https://www.python.org/downloads/release/python-379/
+  if (not RegQueryStringValue(HKLM, 'Software\Python\PythonCore\3.7', 'Version', Version) or not StrToVersion(Version, PackedVersion) or (ComparePackedVersion(PackedVersion, PackVersionComponents(3, 7, 9, 0)) < 0))
+    and (not RegQueryStringValue(HKCU, 'Software\Python\PythonCore\3.7', 'Version', Version2) or not StrToVersion(Version2, PackedVersion2) or (ComparePackedVersion(PackedVersion2, PackVersionComponents(3, 7, 9, 0)) < 0)) then begin
+    Dependency_Add('python379' + Dependency_ArchSuffix + '.exe',
+      '/quiet InstallAllUsers=1 PrependPath=1 Include_tcltk=0 Include_test=0',
+      'Python 3.7.9',
+      'https://www.python.org/ftp/python/3.7.9/python-3.7.9-amd64.exe',
+      '', False, False);
+  end;
+end;
+
 [Files]
 #ifdef Dependency_Path_NetCoreCheck
 ; download netcorecheck.exe: https://www.nuget.org/packages/Microsoft.NET.Tools.NETCoreCheck.x86
