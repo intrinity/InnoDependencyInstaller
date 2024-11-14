@@ -671,8 +671,8 @@ begin
   if not RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL13.SQLEXPRESS\MSSQLServer\CurrentVersion', 'CurrentVersion', Version) or not StrToVersion(Version, PackedVersion) or (ComparePackedVersion(PackedVersion, PackVersionComponents(13, 0, 6404, 1)) < 0) then begin
     Dependency_Add('sql2016express' + Dependency_ArchSuffix + '.exe',
       '/QS /IACCEPTSQLSERVERLICENSETERMS /ACTION=INSTALL /FEATURES=SQL /INSTANCENAME=SQLEXPRESS /SQLCOLLATION=Thai_CI_AS',
-      'SQL Server 2016 Service Pack 3 Express',
-      'https://download.microsoft.com/download/f/a/8/fa83d147-63d1-449c-b22d-5fef9bd5bb46/SQLServer2016-SSEI-Expr.exe',
+      'SQL Server 2016 Service Pack 2 Express',
+      'https://download.microsoft.com/download/4/1/A/41AD6EDE-9794-44E3-B3D5-A1AF62CD7A6F/sql16_sp2_dlc/en-us/SQLEXPR_x64_ENU.exe',
       '', False, False);
   end;
 end;
@@ -687,7 +687,7 @@ begin
     Dependency_Add('sql2017express' + Dependency_ArchSuffix + '.exe',
       '/QS /IACCEPTSQLSERVERLICENSETERMS /ACTION=INSTALL /FEATURES=SQL /INSTANCENAME=SQLEXPRESS /SQLCOLLATION=Thai_CI_AS',
       'SQL Server 2017 Express',
-      'https://download.microsoft.com/download/5/E/9/5E9B18CC-8FD5-467E-B5BF-BADE39C51F73/SQLServer2017-SSEI-Expr.exe',
+      'https://download.microsoft.com/download/E/F/2/EF23C21D-7860-4F05-88CE-39AA114B014B/SQLEXPR_x64_ENU.exe',
       '', False, False);
   end;
 end;
@@ -702,7 +702,7 @@ begin
     Dependency_Add('sql2019express' + Dependency_ArchSuffix + '.exe',
       '/QS /IACCEPTSQLSERVERLICENSETERMS /ACTION=INSTALL /FEATURES=SQL /INSTANCENAME=SQLEXPRESS /SQLCOLLATION=Thai_CI_AS',
       'SQL Server 2019 Express',
-      'https://download.microsoft.com/download/7/f/8/7f8a9c43-8c8a-4f7c-9f92-83c18d96b681/SQL2019-SSEI-Expr.exe',
+      'https://download.microsoft.com/download/7/c/1/7c14e92e-bdcb-4f89-b7cf-93543e7112d1/SQLEXPR_x64_ENU.exe',
       '', False, False);
   end;
 end;
@@ -717,7 +717,7 @@ begin
     Dependency_Add('sql2022express' + Dependency_ArchSuffix + '.exe',
       '/QS /IACCEPTSQLSERVERLICENSETERMS /ACTION=INSTALL /FEATURES=SQL /INSTANCENAME=SQLEXPRESS /SQLCOLLATION=Thai_CI_AS',
       'SQL Server 2022 Express',
-      'https://go.microsoft.com/fwlink/p/?linkid=2216019',
+      'https://download.microsoft.com/download/3/8/d/38de7036-2433-4207-8eae-06e247e17b25/SQLEXPR_x64_ENU.exe',
       '', False, False);
   end;
 end;
