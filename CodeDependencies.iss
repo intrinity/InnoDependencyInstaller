@@ -218,6 +218,32 @@ begin
   Result := Dependency_String(' (x86)', ' (x64)');
 end;
 
+function Dependency_IsNetSdkInstalled(Major, Minor, Revision: Word): Boolean;
+var
+  ResultCode: Integer;
+  Output: TExecOutput;
+  LineIndex: Integer;
+  LineParts: TArrayOfString;
+  PackedVersion: Int64;
+  LineMajor, LineMinor, LineRevision, LineBuild: Word;
+begin
+  if ExecAndCaptureOutput(ExpandConstant(Dependency_String('{commonpf32}', '{commonpf64}')) + '\dotnet\dotnet.exe', '--list-sdks', '', SW_HIDE, ewWaitUntilTerminated, ResultCode, Output) and (ResultCode = 0) then begin
+    for LineIndex := 0 to Length(Output.StdOut) - 1 do begin
+      LineParts := StringSplit(Trim(Output.StdOut[LineIndex]), [' '], stExcludeEmpty);
+
+      if (Length(LineParts) > 1) and (StrToVersion(LineParts[0], PackedVersion)) then begin
+        UnpackVersionComponents(PackedVersion, LineMajor, LineMinor, LineRevision, LineBuild);
+
+        if (LineMajor = Major) and (LineMinor = Minor) and (LineRevision >= Revision) then begin
+          Result := True;
+          exit;
+        end;
+      end;
+    end;
+  end;
+  Result := False;
+end;
+
 function Dependency_IsNetCoreInstalled(Runtime: String; Major, Minor, Revision: Word): Boolean;
 var
   ResultCode: Integer;
@@ -472,6 +498,17 @@ begin
   end;
 end;
 
+procedure Dependency_AddDotNet80Sdk;
+begin
+  // https://dotnet.microsoft.com/download/dotnet/8.0
+  if not Dependency_IsNetSdkInstalled(8, 0, 406) then begin
+    Dependency_Add('dotnet80sdk' + Dependency_ArchSuffix + '.exe',
+      '/lcid ' + IntToStr(GetUILanguage) + ' /passive /norestart',
+      '.NET SDK 8.0.406' + Dependency_ArchTitle,
+      Dependency_String('https://download.visualstudio.microsoft.com/download/pr/79762f76-b8d6-4dbb-8e81-ac4998c4c225/cd2468d03cc157861d4d6617df4cec66/dotnet-sdk-8.0.406-win-x86.exe', 'https://download.visualstudio.microsoft.com/download/pr/bd44cdb8-dcac-4f1f-8246-1ee392c68dac/ba818a6e513c305d4438c7da45c2b085/dotnet-sdk-8.0.406-win-x64.exe'),
+      '', False, False);
+  end;
+end;
 
 procedure Dependency_AddDotNet80;
 begin
