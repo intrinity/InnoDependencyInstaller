@@ -6,7 +6,7 @@
 
 ## Installation and Usage
 
-1. Download and install [Inno Setup 6.2+](https://www.jrsoftware.org/isinfo.php).
+1. Download and install [Inno Setup 6.4+](https://www.jrsoftware.org/isinfo.php).
 2. Download [this repository](https://github.com/DomGries/InnoDependencyInstaller/archive/master.zip) or clone it.
 3. Open the extracted _ExampleSetup.iss_ file.
 4. Comment out dependency function calls inside _InitializeSetup_ function to disable installing them:
@@ -22,8 +22,6 @@
 You can also just include _CodeDependencies.iss_ file into your setup and call the desired _Dependency_Add_ functions (some may need defining their exe file path before the include):
 
 ```iss
-#define public Dependency_Path_NetCoreCheck "dependencies\"
-
 #include "CodeDependencies.iss"
 
 [Setup]
@@ -33,7 +31,7 @@ You can also just include _CodeDependencies.iss_ file into your setup and call t
 function InitializeSetup: Boolean;
 begin
   // add the dependencies you need
-  Dependency_AddDotNet70;
+  Dependency_AddDotNet90;
   // ...
 
   Result := True;
@@ -81,7 +79,7 @@ If you only deploy 32-bit binaries and dependencies you can also instead just no
     * .NET 6.0 (Runtime, ASP.NET, Desktop)
     * .NET 7.0 (Runtime, ASP.NET, Desktop)
     * .NET 8.0 (Runtime, ASP.NET, Desktop)
-    * .NET 9.0 RC 2 (Runtime, ASP.NET, Desktop)
+    * .NET 9.0 (Runtime, ASP.NET, Desktop)
 * C++
     * Visual C++ 2005 Service Pack 1 Redistributable
     * Visual C++ 2008 Service Pack 1 Redistributable
